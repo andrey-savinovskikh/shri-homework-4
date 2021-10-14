@@ -13,6 +13,7 @@ module.exports = function (Homework) {
     const prGet = promisify(array.get),
         prLength = promisify(array.length),
         prAdd = promisify(Homework.add),
+        prLess = promisify(Homework.less),
         prFn = promisify(fn);
 
     let acc = initialValue;
@@ -21,7 +22,7 @@ module.exports = function (Homework) {
 
     let i = 0;
 
-    while (i < length) {
+    while (await prLess(i, length)) {
       const curr = await prGet(i);
 
       acc = await prFn(acc, curr, i, array);
