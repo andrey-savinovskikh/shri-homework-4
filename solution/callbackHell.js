@@ -16,7 +16,7 @@ module.exports = function (Homework) {
     })
   }
 
-  return async (array, fn, initialValue, cb) => {
+  return (array, fn, initialValue, cb) => {
     array.length((length) => {
       iter(0, array, initialValue, length, fn, cb)
     })
