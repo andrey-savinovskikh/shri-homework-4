@@ -12,16 +12,21 @@ module.exports = function (Homework) {
   return async (array, fn, initialValue, cb) => {
     const prGet = promisify(array.get),
         prLength = promisify(array.length),
+        prAdd = promisify(Homework.add),
         prFn = promisify(fn);
 
     let acc = initialValue;
 
     let length = await prLength();
 
-    for (let i = 0; i < length; i++) {
+    let i = 0;
+
+    while (i < length) {
       const curr = await prGet(i);
 
       acc = await prFn(acc, curr, i, array);
+
+      i = await prAdd(i, 1);
     }
 
     cb(acc);
